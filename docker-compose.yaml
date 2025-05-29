@@ -1,0 +1,48 @@
+services:
+  biblioteca:
+    container_name: biblioteca
+    image: biblioteca
+    build:
+      context: .
+    ports:
+      - 8888:80
+    restart: unless-stopped
+    stdin_open: true
+    tty: true 
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - APP_ENV=dev
+    depends_on:
+      - postgres
+    networks:
+      - biblioteca_network
+
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      #POSTGRES_DB: localstack
+    ports:
+      - 5432:5432
+    networks:
+      - biblioteca_network
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+    ports:
+      - 5050:80
+      - 5051:443
+    depends_on:
+      - postgres
+    networks:
+      - biblioteca_network
+networks:
+  biblioteca_network:
+    driver: bridge
