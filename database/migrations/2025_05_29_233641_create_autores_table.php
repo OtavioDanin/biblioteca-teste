@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('livros', function (Blueprint $table) {
-            $table->bigIncrements('codl');
-            $table->string('titulo', 40);
-            $table->string('editora', 40);
-            $table->integer('edicao');
-            $table->string('ano_publicacao', 4);
+        Schema::create('autores', function (Blueprint $table) {
+            $table->bigIncrements('cod_au')->primary();
+            $table->string('nome', 100);
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('livros');
+        Schema::dropIfExists('autores');
     }
 };
