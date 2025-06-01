@@ -14,10 +14,12 @@ class Assunto extends Model
     public $incrementing = false;
     protected $keyType = 'integer';
 
+    protected $table = 'assuntos';
+
     protected $fillable = ['descricao'];
 
     public function livros(): BelongsToMany
     {
-        return $this->belongsToMany(Livro::class, 'livro_assunto', 'assunto_cod_as', 'livro_codi');
+        return $this->belongsToMany(Livro::class, 'livro_assunto', 'assunto_cod_as', 'livro_codl');
     }
 }

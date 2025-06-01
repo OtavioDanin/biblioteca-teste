@@ -19,8 +19,10 @@ class Autor extends Model
         'nome'
     ];
 
+    protected $table = 'autores';
+
     public function livros(): BelongsToMany
     {
-        return $this->belongsToMany(Livro::class, 'livro_autor', 'autor_cod_au', 'livro_codi');
+        return $this->belongsToMany(Livro::class, 'livro_autor', 'autor_cod_au', 'livro_codl');
     }
 }

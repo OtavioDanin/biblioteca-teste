@@ -15,28 +15,28 @@ class LivrosSeeder extends Seeder
     {
         $livros = [
             [
-                'codi' => 1,
+                'codl' => 1,
                 'titulo' => 'Dom Casmurro',
                 'editora' => 'Companhia das Letras',
                 'edicao' => 1,
                 'ano_publicacao' => '1899'
             ],
             [
-                'codi' => 2,
+                'codl' => 2,
                 'titulo' => 'A Hora da Estrela',
                 'editora' => 'Rocco',
                 'edicao' => 3,
                 'ano_publicacao' => '1977'
             ],
             [
-                'codi' => 3,
+                'codl' => 3,
                 'titulo' => 'Harry Potter',
                 'editora' => 'Bloomsbury',
                 'edicao' => 1,
                 'ano_publicacao' => '1997'
             ],
             [
-                'codi' => 4,
+                'codl' => 4,
                 'titulo' => '1984',
                 'editora' => 'Penguin',
                 'edicao' => 2,

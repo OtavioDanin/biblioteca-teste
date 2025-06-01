@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('livro_assunto', function (Blueprint $table) {
-            $table->bigInteger('livro_codi');
+            $table->bigInteger('livro_codl');
             $table->bigInteger('assunto_cod_as');
             
-            $table->foreign('livro_codi')
+            $table->foreign('livro_codl')
                   ->references('codl')
                   ->on('livros')
                   ->onDelete('cascade');
@@ -25,7 +25,7 @@ return new class extends Migration
                   ->on('assuntos')
                   ->onDelete('cascade');
                   
-            $table->primary(['livro_codi', 'assunto_cod_as']);
+            $table->primary(['livro_codl', 'assunto_cod_as']);
         });
     }
 

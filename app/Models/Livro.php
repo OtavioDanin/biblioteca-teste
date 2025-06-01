@@ -10,12 +10,14 @@ class Livro extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'codi';
-    public $incrementing = false;
+    protected $primaryKey = 'codl';
+    public $incrementing = true;
     protected $keyType = 'integer';
+    
+    protected $table = 'livros';
 
     protected $fillable = [
-        'codi',
+        'codl',
         'titulo',
         'editora',
         'edicao',
@@ -24,11 +26,11 @@ class Livro extends Model
 
     public function autores(): BelongsToMany
     {
-        return $this->belongsToMany(Autor::class, 'livro_autor', 'livro_codi', 'autor_cod_au');
+        return $this->belongsToMany(Autor::class, 'livro_autor', 'livro_codl', 'autor_cod_au');
     }
 
     public function assuntos(): BelongsToMany
     {
-        return $this->belongsToMany(Assunto::class, 'livro_assunto', 'livro_codi', 'assunto_cod_as');
+        return $this->belongsToMany(Assunto::class, 'livro_assunto', 'livro_codl', 'assunto_cod_as');
     }
 }
