@@ -96,15 +96,14 @@ Aqui estão as principais rotas disponíveis no sistema:
 
 | Método | URI | Nome da Rota | Descrição |
 | :----- | :------------------------------- | :-------------------------------- | :---------------------------------------- |
-| `GET` | `/autores-livros` | `autores.livros.index` | Exibe um relatório de livros agrupado por autor. |
-| `GET` | `/autores-livros/export-pdf` | `autores.livros.export_pdf` | Exporta o relatório de autores/livros/assuntos para PDF. |
+| `GET` | `/exportar` | `aexportar` | Exporta o relatório para PDF. |
 
 ## ⚙️ Tecnologias Utilizadas
 
-* **Laravel 11:** Framework PHP
+* **Laravel 12:** Framework PHP
 * **PostgreSQL:** Banco de dados
 * **Bootstrap:** Framework CSS para estilização
-* **Spatie Laravel PDF (com Dompdf):** Para geração de relatórios PDF
+* **barryvdh/laravel-dompdf (com Dompdf):** Para geração de relatórios PDF
 * **Blade:** Motor de templates do Laravel
 
 ## 📄 Licença
