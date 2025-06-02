@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('livros', function (Blueprint $table) {
+        Schema::create('livros', function (Blueprint $table) {
             $table->bigIncrements('codl');
             $table->string('titulo', 40);
+            $table->decimal('valor', 8, 2)->default(0.00);
             $table->string('editora', 40);
             $table->integer('edicao');
             $table->string('ano_publicacao', 4);

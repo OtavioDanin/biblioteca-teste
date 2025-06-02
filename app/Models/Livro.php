@@ -19,6 +19,7 @@ class Livro extends Model
     protected $fillable = [
         'codl',
         'titulo',
+        'valor',
         'editora',
         'edicao',
         'ano_publicacao'

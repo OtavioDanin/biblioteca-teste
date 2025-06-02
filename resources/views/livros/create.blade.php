@@ -27,6 +27,10 @@
                     <input type="text" class="form-control" id="titulo" name="titulo" value="{{ old('titulo') }}" required maxlength="40">
                 </div>
                 <div class="mb-3">
+                    <label for="valor" class="form-label">Valor (R$):</label>
+                    <input type="number" class="form-control" id="valor" name="valor" value="{{ old('valor') }}" step="0.01" min="0" required>
+                </div>
+                <div class="mb-3">
                     <label for="Editora" class="form-label">Editora:</label>
                     <input type="text" class="form-control" id="editora" name="editora" value="{{ old('editora') }}" required maxlength="40">
                 </div>

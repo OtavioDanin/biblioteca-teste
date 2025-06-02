@@ -17,6 +17,7 @@ class LivrosSeeder extends Seeder
             [
                 'codl' => 1,
                 'titulo' => 'Dom Casmurro',
+                'valor' => 35.99,
                 'editora' => 'Companhia das Letras',
                 'edicao' => 1,
                 'ano_publicacao' => '1899'
@@ -24,6 +25,7 @@ class LivrosSeeder extends Seeder
             [
                 'codl' => 2,
                 'titulo' => 'A Hora da Estrela',
+                'valor' => 59.50,
                 'editora' => 'Rocco',
                 'edicao' => 3,
                 'ano_publicacao' => '1977'
@@ -31,6 +33,7 @@ class LivrosSeeder extends Seeder
             [
                 'codl' => 3,
                 'titulo' => 'Harry Potter',
+                'valor' => 29.90,
                 'editora' => 'Bloomsbury',
                 'edicao' => 1,
                 'ano_publicacao' => '1997'
@@ -38,6 +41,7 @@ class LivrosSeeder extends Seeder
             [
                 'codl' => 4,
                 'titulo' => '1984',
+                'valor' => 99.90,
                 'editora' => 'Penguin',
                 'edicao' => 2,
                 'ano_publicacao' => '1949'

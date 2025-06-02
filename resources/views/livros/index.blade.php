@@ -19,8 +19,8 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Título</th>
+                        <th>Valor</th>
                         <th>Editora</th>
                         <th>Edição</th>
                         <th>Ano Publicação</th>
@@ -32,8 +32,8 @@
                 <tbody>
                     @foreach ($livros['data'] as $livro)
                         <tr>
-                            <td>{{ $livro['codl'] }}</td>
                             <td>{{ $livro['titulo'] }}</td>
+                            <td>R$ {{ number_format($livro['valor'], 2, ',', '.') }}</td>
                             <td>{{ $livro['editora'] }}</td>
                             <td>{{ $livro['edicao'] }}</td>
                             <td>{{ $livro['ano_publicacao'] }}</td>

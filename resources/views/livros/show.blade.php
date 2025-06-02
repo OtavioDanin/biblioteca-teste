@@ -13,6 +13,9 @@
                 <dt class="col-sm-3">Título:</dt>
                 <dd class="col-sm-9">{{ $livro['titulo'] }}</dd>
 
+                <dt class="col-sm-3">Valor:</dt>
+                <dd class="col-sm-9">R$ {{ number_format($livro['valor'], 2, ',', '.') }}</dd>
+
                 <dt class="col-sm-3">Editora:</dt>
                 <dd class="col-sm-9">{{ $livro['editora'] }}</dd>
 

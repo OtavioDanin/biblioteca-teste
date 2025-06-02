@@ -10,6 +10,7 @@ readonly class LivroDTO
     {
         return [
             'titulo' => $data['titulo'],
+            'valor' => $data['valor'],
             'editora' => $data['editora'],
             'edicao' => $data['edicao'],
             'ano_publicacao' => $data['anoPublicacao'],

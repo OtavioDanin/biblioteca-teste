@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\DTO\LivroDTO;
+use App\Exceptions\LivroException;
 use App\Services\AssuntoServiceInterface;
 use App\Services\AutorServiceInterface;
 use App\Services\LivroServiceInterface;
 use Illuminate\Http\Request;
-
 use Throwable;
 
 class LivroController extends Controller
 {
+    use \App\Traits\LoggerFile;
+
     public function __construct(
         protected LivroServiceInterface $livroService,
         protected AutorServiceInterface $autorService,
@@ -19,41 +21,38 @@ class LivroController extends Controller
         protected LivroDTO $livroDTO,
     ) {}
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         try {
             $livros = $this->livroService->getAllLivros();
             return view('livros.index', compact('livros'));
         } catch (Throwable $th) {
-            return $th->getMessage();
+            $this->error("Message: " . $th->getMessage(), ['Metodo' => 'index', 'Exception' => 'Throwable']);
+            return view('livros.problem');
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         try {
             $autores = $this->autorService->getAllAutores();
             $assuntos = $this->assuntoService->getAllAssuntos();
             return view('livros.create', compact('autores', 'assuntos'));
+        } catch (LivroException $livroEx) {
+            $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'create', 'Exception' => 'LivroException']);
+            return view('livros.problem');
         } catch (Throwable $th) {
-            return $th->getMessage();
+            $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'create', 'Exception' => 'Throwable']);
+            return view('livros.problem');
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
             $request->validate([
                 'titulo' => 'required|string|max:40',
+                'valor' => 'required|numeric|min:0|regex:/^\d+(\.\d{1,2})?$/',
                 'editora' => 'required|string|max:40',
                 'edicao' => 'required|integer|min:1',
                 'anoPublicacao' => 'required|string|max:4',
@@ -68,27 +67,33 @@ class LivroController extends Controller
 
             return redirect()->route('livros.index')
                 ->with('success', 'Livro criado com sucesso!');
+        } catch (LivroException $livroEx) {
+            $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'store', 'Exception' => 'LivroException']);
+            return redirect()->route('livros.index')
+                ->with('error', 'Ocorreu um problema ao cadastrar.');
         } catch (Throwable $th) {
-            var_dump($th->getMessage());
+            var_dump($th->getMessage());die;
+
+            $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'store', 'Exception' => 'Throwable']);
+            return redirect()->route('livros.index')
+                ->with('error', 'Ocorreu um problema na inesperado ao cadastrar o livro.');
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(int $id)
     {
         try {
             $livro = $this->livroService->find($id);
             return view('livros.show', compact('livro'));
+        } catch (LivroException $livroEx) {
+            $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'show', 'Exception' => 'LivroException']);
+            return view('livros.problem');
         } catch (Throwable $th) {
-            $th->getMessage();
+            $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'show', 'Exception' => 'Throwable']);
+            return view('livros.problem');
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         try {
@@ -96,19 +101,21 @@ class LivroController extends Controller
             $autores = $this->autorService->getAllAutores();
             $assuntos = $this->assuntoService->getAllAssuntos();
             return view('livros.edit', compact('livro', 'autores', 'assuntos'));
+        } catch (LivroException $livroEx) {
+            $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'edit', 'Exception' => 'LivroException']);
+            return view('livros.problem');
         } catch (Throwable $th) {
-            var_dump($th->getMessage());
+            $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'edit', 'Exception' => 'Throwable']);
+            return view('livros.problem');
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         try {
             $request->validate([
                 'titulo' => 'required|string|max:40',
+                'valor' => 'required|numeric|min:0|regex:/^\d+(\.\d{1,2})?$/',
                 'editora' => 'required|string|max:40',
                 'edicao' => 'required|integer|min:1',
                 'anoPublicacao' => 'required|string|max:4',
@@ -117,17 +124,21 @@ class LivroController extends Controller
                 'assuntos' => 'nullable|array',
                 'assuntos.*' => 'exists:assuntos,cod_as',
             ]);
-            $this->livroService->update($id, $request->all());
+            $livroDTO = $this->livroDTO->create($request->all());
+            $this->livroService->update($id, $livroDTO);
             return redirect()->route('livros.index')
                 ->with('success', 'Livro atualizado com sucesso!');
+        } catch (LivroException $livroEx) {
+            $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'update', 'Exception' => 'LivroException']);
+            return redirect()->route('livros.index')
+                ->with('error', 'Ocorreu um problema na atualização.');
         } catch (Throwable $th) {
-            var_dump($th->getMessage());
+            $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'update', 'Exception' => 'Throwable']);
+            return redirect()->route('livros.index')
+                ->with('error', 'Ocorreu um problema na inesperado ao atualizar.');
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
@@ -135,7 +146,9 @@ class LivroController extends Controller
             return redirect()->route('livros.index')
                 ->with('success', 'Livro excluído com sucesso!');
         } catch (Throwable $th) {
-            var_dump($th->getMessage());
+            $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'destroy', 'Exception' => 'Throwable']);
+            return redirect()->route('livros.index')
+                ->with('error', 'Ocorreu um problema na inesperado ao excluir o Livro.');
         }
     }
 }
