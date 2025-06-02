@@ -23,7 +23,6 @@ class LivroService implements LivroServiceInterface
         if (empty($livroData)) {
             throw new LivroException('Não existe livro para ser inserido.', 500);
         }
-        // dd($livroData);
         DB::transaction(function () use ($livroData) {
             $livro =  $this->livroRepository->persist($livroData);
             $livro->autores()->attach($livroData['autores']);
