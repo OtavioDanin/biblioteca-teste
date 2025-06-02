@@ -9,6 +9,7 @@ use App\Services\AutorServiceInterface;
 use App\Services\LivroServiceInterface;
 use Illuminate\Http\Request;
 use Throwable;
+use Illuminate\Database\QueryException;
 
 class LivroController extends Controller
 {
@@ -70,10 +71,12 @@ class LivroController extends Controller
         } catch (LivroException $livroEx) {
             $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'store', 'Exception' => 'LivroException']);
             return redirect()->route('livros.index')
-                ->with('error', 'Ocorreu um problema ao cadastrar.');
+                ->with('error', 'Falha no cadastro.');
+        } catch (QueryException $qEx) {
+            $this->emergency("Message: " . $qEx->getMessage(), ['Metodo' => 'store', 'Exception' => 'QueryException']);
+            return redirect()->route('livros.index')
+                ->with('error', 'Ocorreu um problema durante o Cadastro.');
         } catch (Throwable $th) {
-            var_dump($th->getMessage());die;
-
             $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'store', 'Exception' => 'Throwable']);
             return redirect()->route('livros.index')
                 ->with('error', 'Ocorreu um problema na inesperado ao cadastrar o livro.');
@@ -131,8 +134,14 @@ class LivroController extends Controller
         } catch (LivroException $livroEx) {
             $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'update', 'Exception' => 'LivroException']);
             return redirect()->route('livros.index')
-                ->with('error', 'Ocorreu um problema na atualização.');
+                ->with('error', 'Problema na atualização.');
+        } catch (QueryException $qEx) {
+            $this->emergency("Message: " . $qEx->getMessage(), ['Metodo' => 'update', 'Exception' => 'QueryException']);
+            return redirect()->route('livros.index')
+                ->with('error', 'Ocorreu um problema durante a atualização.');
         } catch (Throwable $th) {
+            var_dump(get_class($th));
+            die;
             $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'update', 'Exception' => 'Throwable']);
             return redirect()->route('livros.index')
                 ->with('error', 'Ocorreu um problema na inesperado ao atualizar.');

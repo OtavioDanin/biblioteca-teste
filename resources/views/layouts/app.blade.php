@@ -24,7 +24,6 @@
                         <a class="nav-link {{ Request::routeIs('livros.index') ? 'active' : '' }}" aria-current="page"
                             href="{{ route('livros.index') }}">Livros</a>
                     </li>
-                    {{-- Adicione outros links de navegação aqui se tiver outras seções --}}
                 </ul>
             </div>
         </div>

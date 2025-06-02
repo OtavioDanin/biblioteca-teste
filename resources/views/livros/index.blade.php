@@ -10,6 +10,10 @@
         </a>
     </div>
 
+    <a href="{{ route('exportar') }}" class="btn btn-success me-2">
+        <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
+    </a>
+
     @if (count($livros) == 0)
         <div class="alert alert-info" role="alert">
             Nenhum livro cadastrado.
@@ -52,13 +56,17 @@
                                 @endforelse
                             </td>
                             <td>
-                                <a href="{{ route('livros.show', $livro['codl'] ) }}" class="btn btn-info btn-sm" title="Ver Detalhes">
+                                <a href="{{ route('livros.show', $livro['codl']) }}" class="btn btn-info btn-sm"
+                                    title="Ver Detalhes">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <a href="{{ route('livros.edit', $livro['codl']) }}" class="btn btn-warning btn-sm" title="Editar">
+                                <a href="{{ route('livros.edit', $livro['codl']) }}" class="btn btn-warning btn-sm"
+                                    title="Editar">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('livros.destroy', $livro['codl']) }}" method="POST" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este livro?');">
+                                <form action="{{ route('livros.destroy', $livro['codl']) }}" method="POST"
+                                    class="d-inline"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este livro?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm" title="Excluir">
@@ -74,7 +82,8 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item disabled">
-                <a class="page-link" href="{{ $livros['first_page_url'] }}" tabindex="-1" aria-disabled="true">Previous</a>
+                    <a class="page-link" href="{{ $livros['first_page_url'] }}" tabindex="-1"
+                        aria-disabled="true">Previous</a>
                 </li>
                 @foreach ($livros['links'] as $livro)
                     <li class="page-item"><a class="page-link" href="{{ $livro['url'] }}">1</a></li>

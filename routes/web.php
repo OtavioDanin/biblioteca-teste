@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BibliotecaViewController;
 use App\Http\Controllers\LivroController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,3 +9,4 @@ Route::get('/', function () {
 });
 
 Route::resource("livros", LivroController::class);
+Route::get('/exportar', [BibliotecaViewController::class, 'exportarPdf'])->name('exportar');
