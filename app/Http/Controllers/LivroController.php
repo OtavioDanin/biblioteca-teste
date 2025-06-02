@@ -75,7 +75,7 @@ class LivroController extends Controller
         } catch (QueryException $qEx) {
             $this->emergency("Message: " . $qEx->getMessage(), ['Metodo' => 'store', 'Exception' => 'QueryException']);
             return redirect()->route('livros.index')
-                ->with('error', 'Ocorreu um problema durante o Cadastro.');
+                ->with('error', 'Ocorreu um problema durante o Cadastro.  Tente novamente.');
         } catch (Throwable $th) {
             $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'store', 'Exception' => 'Throwable']);
             return redirect()->route('livros.index')
@@ -138,7 +138,7 @@ class LivroController extends Controller
         } catch (QueryException $qEx) {
             $this->emergency("Message: " . $qEx->getMessage(), ['Metodo' => 'update', 'Exception' => 'QueryException']);
             return redirect()->route('livros.index')
-                ->with('error', 'Ocorreu um problema durante a atualização.');
+                ->with('error', 'Ocorreu um problema durante a atualização. Tente novamente.');
         } catch (Throwable $th) {
             var_dump(get_class($th));
             die;
