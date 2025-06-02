@@ -26,7 +26,7 @@ RUN { \
     echo 'opcache.memory_consumption=128'; \
     echo 'opcache.max_wasted_percentage=10'; \
     echo 'opcache.interned_strings_buffer=16'; \
-    echo 'opcache.fast_shutdown=1'; \
+    echo 'opcache.use_cwd=0'; \
 } > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 RUN { \
@@ -45,7 +45,7 @@ COPY ./ /var/www/html
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# EXPOSE 80 443
+EXPOSE 80 443
 WORKDIR /var/www/html
 RUN mkdir -p  /var/log/supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
