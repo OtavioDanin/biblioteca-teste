@@ -35,6 +35,7 @@ class LivroServiceTest extends TestCase
         
         $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]['id']);
+        $this->assertEquals('Livro Teste', $result[0]['titulo']);
     }
 
     public function testSaveLivroSuccess()
@@ -61,7 +62,7 @@ class LivroServiceTest extends TestCase
             
         $this->livroService->save($livroData);
         
-        $this->assertTrue(true); // Se chegou aqui sem exceptions, o teste passou
+        $this->assertTrue(true);
     }
 
     public function testSaveLivroWithEmptyData()

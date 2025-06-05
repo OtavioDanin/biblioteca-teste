@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Helpers\PDF\PdfHelper;
+use App\Helpers\PDF\PdfInterface;
 use App\Repositories\AssuntoRepository;
 use App\Repositories\AssuntoRepositoryInterface;
 use App\Repositories\AutorRepository;
 use App\Repositories\AutorRepositoryInterface;
+use App\Repositories\BibliotecaViewRepository;
+use App\Repositories\BibliotecaViewRepositoryInterface;
 use App\Repositories\LivroRepository;
 use App\Repositories\LivroRepositoryInterface;
 use App\Services\AssuntoService;
@@ -31,6 +35,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(AssuntoRepositoryInterface::class, AssuntoRepository::class);
         $this->app->bind(AssuntoServiceInterface::class, AssuntoService::class);
+
+        $this->app->bind(BibliotecaViewRepositoryInterface::class, BibliotecaViewRepository::class);
+        $this->app->bind(PdfInterface::class, PdfHelper::class);
     }
 
     /**

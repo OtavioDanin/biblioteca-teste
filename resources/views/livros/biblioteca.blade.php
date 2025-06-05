@@ -69,7 +69,6 @@
     <table>
         <thead>
             <tr>
-                <th>ID Autor</th>
                 <th>Nome do Autor</th>
                 <th>Total de Livros</th>
                 <th>Títulos dos Livros</th>
@@ -77,9 +76,8 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($autoresInfo as $autor)
+            @forelse ($data as $autor)
                 <tr>
-                    <td>{{ $autor->autor_id }}</td>
                     <td>{{ $autor->autor_nome }}</td>
                     <td>{{ $autor->total_livros }}</td>
                     <td>

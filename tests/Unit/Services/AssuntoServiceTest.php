@@ -31,6 +31,7 @@ class AssuntoServiceTest extends TestCase
         $result = $this->assuntoService->getAllAssuntos();
         
         $this->assertIsArray($result);
+        $this->assertEquals('1', $result[0]['id']);
         $this->assertEquals('Assunto Teste', $result[0]['descricao']);
     }
 
