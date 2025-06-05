@@ -32,9 +32,6 @@ class LivroService implements LivroServiceInterface
 
     public function find(int $id): array
     {
-        if (empty($id)) {
-            throw new LivroException('Livro sem código.', 500);
-        }
         $livro = $this->livroRepository->findById($id);
         $dataArray = $livro->toArray();
         if (empty($dataArray)) {

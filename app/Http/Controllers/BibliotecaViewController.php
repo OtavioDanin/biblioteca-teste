@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Exceptions\BibliotecaException;
 use App\Helpers\PDF\PdfHelper;
 use App\Services\BibliotecaViewService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\QueryException;
 use Throwable;
 

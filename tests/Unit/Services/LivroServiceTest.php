@@ -18,7 +18,7 @@ class LivroServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->livroRepositoryMock = Mockery::mock(LivroRepositoryInterface::class);
         $this->livroService = new LivroService($this->livroRepositoryMock);
     }
@@ -26,13 +26,13 @@ class LivroServiceTest extends TestCase
     public function testGetAllLivros()
     {
         $livrosCollection = collect([['id' => 1, 'titulo' => 'Livro Teste']]);
-        
+
         $this->livroRepositoryMock->shouldReceive('getAll')
             ->once()
             ->andReturn($livrosCollection);
-            
+
         $result = $this->livroService->getAllLivros();
-        
+
         $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]['id']);
         $this->assertEquals('Livro Teste', $result[0]['titulo']);
@@ -45,23 +45,23 @@ class LivroServiceTest extends TestCase
             'autores' => [1, 2],
             'assuntos' => [3, 4]
         ];
-        
+
         $livroModel = Mockery::mock(Model::class);
         $livroModel->shouldReceive('autores->attach');
         $livroModel->shouldReceive('assuntos->attach');
-        
+
         $this->livroRepositoryMock->shouldReceive('persist')
             ->with($livroData)
             ->andReturn($livroModel);
-            
+
         DB::shouldReceive('transaction')
             ->once()
             ->andReturnUsing(function ($callback) {
                 return $callback();
             });
-            
+
         $this->livroService->save($livroData);
-        
+
         $this->assertTrue(true);
     }
 
@@ -69,7 +69,7 @@ class LivroServiceTest extends TestCase
     {
         $this->expectException(LivroException::class);
         $this->expectExceptionMessage('Não existe livro para ser inserido.');
-        
+
         $this->livroService->save([]);
     }
 
@@ -78,13 +78,13 @@ class LivroServiceTest extends TestCase
         $livroModel = Mockery::mock(Model::class);
         $livroModel->shouldReceive('toArray')
             ->andReturn(['id' => 1, 'titulo' => 'Livro Encontrado']);
-            
+
         $this->livroRepositoryMock->shouldReceive('findById')
             ->with(1)
             ->andReturn($livroModel);
-            
+
         $result = $this->livroService->find(1);
-        
+
         $this->assertIsArray($result);
         $this->assertEquals('Livro Encontrado', $result['titulo']);
     }
@@ -93,16 +93,25 @@ class LivroServiceTest extends TestCase
     {
         $this->expectException(LivroException::class);
         $this->expectExceptionMessage('Livro não encontrado.');
-        
+
         $livroModel = Mockery::mock(Model::class);
         $livroModel->shouldReceive('toArray')
             ->andReturn([]);
-            
+
         $this->livroRepositoryMock->shouldReceive('findById')
-            ->with(999)
+            ->with(0)
             ->andReturn($livroModel);
-            
-        $this->livroService->find(999);
+
+        $this->livroService->find(0);
+    }
+
+    public function testUpdateThrowEmptyLivroData()
+    {
+        $this->expectException(LivroException::class);
+        $this->expectExceptionMessage('Não há livros para atualizar.');
+        $this->expectExceptionCode(500);
+        
+        $this->livroService->update(1, []);
     }
 
     public function testUpdateLivroSuccess()
@@ -112,23 +121,23 @@ class LivroServiceTest extends TestCase
             'autores' => [1, 2],
             'assuntos' => [3, 4]
         ];
-        
+
         $livroModel = Mockery::mock(Model::class);
         $livroModel->shouldReceive('autores->sync');
         $livroModel->shouldReceive('assuntos->sync');
-        
+
         $this->livroRepositoryMock->shouldReceive('update')
             ->with(1, $livroData)
             ->andReturn($livroModel);
-            
+
         DB::shouldReceive('transaction')
             ->once()
             ->andReturnUsing(function ($callback) {
                 return $callback();
             });
-            
+
         $this->livroService->update(1, $livroData);
-        
+
         $this->assertTrue(true);
     }
 
@@ -137,19 +146,19 @@ class LivroServiceTest extends TestCase
         $livroModel = Mockery::mock(Model::class);
         $livroModel->shouldReceive('autores->detach');
         $livroModel->shouldReceive('assuntos->detach');
-        
+
         $this->livroRepositoryMock->shouldReceive('delete')
             ->with(1)
             ->andReturn($livroModel);
-            
+
         DB::shouldReceive('transaction')
             ->once()
             ->andReturnUsing(function ($callback) {
                 return $callback();
             });
-            
+
         $this->livroService->destroy(1);
-        
+
         $this->assertTrue(true);
     }
 
