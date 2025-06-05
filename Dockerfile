@@ -1,5 +1,10 @@
 FROM php:8.3-fpm-alpine3.21
 
+RUN apk update && apk upgrade
+RUN apk add autoconf
+RUN apk add gcc
+RUN apk add php-pear
+
 RUN apk add --no-cache \
     nginx \
     supervisor \
