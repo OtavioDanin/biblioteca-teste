@@ -50,7 +50,15 @@ COPY ./ /var/www/html
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-EXPOSE 80 443
+RUN mkdir -p /run/php/
+RUN touch /run/php/php-fpm.pid
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
 WORKDIR /var/www/html
+
+RUN composer install --no-dev -o -a
+
+EXPOSE 80 443
 RUN mkdir -p  /var/log/supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

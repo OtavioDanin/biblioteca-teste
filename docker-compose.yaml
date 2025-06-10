@@ -5,8 +5,8 @@ services:
     build:
       context: .
     ports:
-      - 80:80
-      - 443:443
+      - 88:80
+      # - 443:443
     restart: unless-stopped
     stdin_open: true
     tty: true 
@@ -22,7 +22,9 @@ services:
 
   postgres:
     container_name: postgres
-    image: postgres:15
+    image: postgres:17.5-alpine3.22
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: secret

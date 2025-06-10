@@ -21,16 +21,44 @@ Este projeto é um sistema web simples para gerenciar informações de livros em
 
 Siga os passos abaixo para configurar e executar a aplicação em seu ambiente local.
 
+### Passos de Instalação do Projeto com Docker
+
+Certifique-se de ter instalado em sua máquina:
+
+* Docker
+* Docker Composer
+
+1.  **Faça o buld das imagens e start dos caontainer, executando:**
+    ```bash
+    docker compose up -d
+    ```
+3.  **Gere a Chave da Aplicação:**
+    ```bash
+    php artisan key:generate
+
+2.  **Instale as Dependências do Composer:**
+    ```bash
+    composer install # ou composer install --no-dev -o -a para produção
+    ```
+3.  **Execute as Migrações e Seeds:**
+    Isso criará as tabelas no banco de dados eulará com dados de exemplo (se você tiver seeders).
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+A aplicação estará disponível em `http://localhost`(porta 80), ou a porta que estiver definina docker-compose.yaml
+
+### Passos de Instalação do Projeto manualmente (sem Docker)
+
+Siga os passos abaixo para configurar e executar a aplicação em seu ambiente local.
+
 ### Pré-requisitos
 
 Certifique-se de ter instalado em sua máquina:
 
 * PHP (>= 8.2)
 * Composer
-* Um servidor web (Nginx, Apache ou o servidor embutido do PHP)
+* Um servidor web (Nginx ou Apache)
 * Banco de dados PostgreSQL (configurado para a aplicação)
-
-### Passos de Instalação
 
 1.  **Clone o Repositório:**
     ```bash
@@ -39,7 +67,7 @@ Certifique-se de ter instalado em sua máquina:
     ```
 2.  **Instale as Dependências do Composer:**
     ```bash
-    composer install
+    composer install # ou composer install --no-dev -o -a para produção
     ```
 3.  **Copie o Arquivo de Variáveis de Ambiente:**
     ```bash
@@ -87,22 +115,22 @@ Aqui estão as principais rotas disponíveis no sistema:
 | `GET` | `/livros` | `livros.index` | Lista todos os livros. |
 | `GET` | `/livros/create` | `livros.create` | Exibe o formulário para criar um novo livro. |
 | `POST` | `/livros` | `livros.store` | Armazena um novo livro no banco de dados. |
-| `GET` | `/livros/{livro}` | `livros.show` | Exibe os detalhes de um livro específico. |
-| `GET` | `/livros/{livro}/edit` | `livros.edit` | Exibe o formulário para editar um livro existente. |
-| `PUT` | `/livros/{livro}` | `livros.update` | Atualiza um livro no banco de dados. |
-| `DELETE`| `/livros/{livro}` | `livros.destroy` | Exclui um livro do banco de dados. |
+| `GET` | `/livros/{id}` | `livros.show` | Exibe os detalhes de um livro específico. |
+| `GET` | `/livros/{id}/edit` | `livros.edit` | Exibe o formulário para editar um livro existente. |
+| `PUT` | `/livros/{id}` | `livros.update` | Atualiza um livro no banco de dados. |
+| `DELETE`| `/livros/{id}` | `livros.destroy` | Exclui um livro do banco de dados. |
 
 ### Rotas de Relatórios (`/autores-livros`)
 
 | Método | URI | Nome da Rota | Descrição |
 | :----- | :------------------------------- | :-------------------------------- | :---------------------------------------- |
-| `GET` | `/exportar` | `aexportar` | Exporta o relatório para PDF. |
+| `GET` | `/exportar` | `exportar` | Exporta o relatório para PDF. |
 
 ## ⚙️ Tecnologias Utilizadas
 
 * **Laravel 12:** Framework PHP
-* **PostgreSQL:** Banco de dados
-* **Bootstrap:** Framework CSS para estilização
+* **PostgreSQL 17:** Banco de dados
+* **Bootstrap 5:** Framework CSS para estilização
 * **barryvdh/laravel-dompdf (com Dompdf):** Para geração de relatórios PDF
 * **Blade:** Motor de templates do Laravel
 
