@@ -1,9 +1,8 @@
-FROM php:8.3-fpm-alpine3.21
+FROM php:8.3-fpm-alpine3.21 AS biblioteca
 
 RUN apk update && apk upgrade
 RUN apk add autoconf
 RUN apk add gcc
-RUN apk add php-pear
 
 RUN apk add --no-cache \
     nginx \
@@ -15,7 +14,6 @@ RUN apk add --no-cache \
     oniguruma-dev \
     postgresql-dev \
     && docker-php-ext-install \
-    pdo_mysql \
     pdo_pgsql \
     mbstring \
     zip \

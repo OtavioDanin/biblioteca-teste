@@ -28,8 +28,9 @@ Certifique-se de ter instalado em sua máquina:
 * Docker
 * Docker Composer
 
-1.  **Faça o buld das imagens e start dos caontainer, executando:**
+1.  **Faça o build das imagens e start dos caontainer, executando:**
     ```bash
+    docker network create biblioteca_network
     docker compose up -d
     ```
 3.  **Gere a Chave da Aplicação:**
