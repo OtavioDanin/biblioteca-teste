@@ -24,12 +24,18 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Modules\\Livros\\": "Modules/Livros/",
+            "Modules\\Autores\\": "Modules/Autores/",
+            "Modules\\Assuntos\\": "Modules/Assuntos/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Modules\\Livros\\Tests\\": "Modules/Livros/Tests/",
+            "Modules\\Autores\\Tests\\": "Modules/Autores/Tests/",
+            "Modules\\Assuntos\\Tests\\": "Modules/Assuntos/Tests/"
         }
     },
     "scripts": {
