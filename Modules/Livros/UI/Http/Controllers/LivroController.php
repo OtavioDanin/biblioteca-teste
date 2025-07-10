@@ -27,7 +27,7 @@ class LivroController extends Controller
     {
         try {
             $livros = $this->livroService->getAllLivros();
-            return view('livros.index', compact('livros'));
+            return view('livrox::livros.index', compact('livros'));
         } catch (Throwable $th) {
             $this->error("Message: " . $th->getMessage(), ['Metodo' => 'index', 'Exception' => 'Throwable']);
             return view('livros.problem');
@@ -39,7 +39,7 @@ class LivroController extends Controller
         try {
             $autores = $this->autorService->getAllAutores();
             $assuntos = $this->assuntoService->getAllAssuntos();
-            return view('livros.create', compact('autores', 'assuntos'));
+            return view('livrox::livros.create', compact('autores', 'assuntos'));
         } catch (LivroException $livroEx) {
             $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'create', 'Exception' => 'LivroException']);
             return view('livros.problem');
@@ -88,13 +88,13 @@ class LivroController extends Controller
     {
         try {
             $livro = $this->livroService->find($id);
-            return view('livros.show', compact('livro'));
+            return view('livrox::livros.show', compact('livro'));
         } catch (LivroException $livroEx) {
             $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'show', 'Exception' => 'LivroException']);
-            return view('livros.problem');
+            return view('livrox::livros.problem');
         } catch (Throwable $th) {
             $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'show', 'Exception' => 'Throwable']);
-            return view('livros.problem');
+            return view('livrox::livros.problem');
         }
     }
 
@@ -104,13 +104,13 @@ class LivroController extends Controller
             $livro = $this->livroService->find($id);
             $autores = $this->autorService->getAllAutores();
             $assuntos = $this->assuntoService->getAllAssuntos();
-            return view('livros.edit', compact('livro', 'autores', 'assuntos'));
+            return view('livrox::livros.edit', compact('livro', 'autores', 'assuntos'));
         } catch (LivroException $livroEx) {
             $this->error("Message: " . $livroEx->getMessage(), ['Metodo' => 'edit', 'Exception' => 'LivroException']);
-            return view('livros.problem');
+            return view('livrox::livros.problem');
         } catch (Throwable $th) {
             $this->emergency("Message: " . $th->getMessage(), ['Metodo' => 'edit', 'Exception' => 'Throwable']);
-            return view('livros.problem');
+            return view('livrox::livros.problem');
         }
     }
 

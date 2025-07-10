@@ -35,6 +35,6 @@ class LivroServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ .  '/../UI/routes/web.php');
 
         // Carrega as views específicas do módulo
-        $this->loadViewsFrom(__DIR__ . '/../UI/resources/views', 'livros'); // 'livros' é o namespace das views
+        $this->loadViewsFrom(__DIR__ . '/../UI/resources/views', 'livrox'); // 'livros' é o namespace das views
     }
 }

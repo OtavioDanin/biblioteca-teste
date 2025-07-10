@@ -27,7 +27,8 @@
             "Database\\Seeders\\": "database/seeders/",
             "Modules\\Livros\\": "Modules/Livros/",
             "Modules\\Autores\\": "Modules/Autores/",
-            "Modules\\Assuntos\\": "Modules/Assuntos/"
+            "Modules\\Assuntos\\": "Modules/Assuntos/",
+            "Modules\\Shares\\": "Modules/Shares/"
         }
     },
     "autoload-dev": {
