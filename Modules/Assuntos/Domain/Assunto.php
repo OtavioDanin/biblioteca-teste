@@ -5,13 +5,14 @@ namespace Modules\Assuntos\Domain;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Modules\Livros\Domain\Livro;
 
 class Assunto extends Model
 {
     use HasFactory;
 
     protected $primaryKey = 'cod_as';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'integer';
 
     protected $table = 'assuntos';

@@ -24,6 +24,10 @@
                         <a class="nav-link {{ Request::routeIs('livros.index') ? 'active' : '' }}" aria-current="page"
                             href="{{ route('livros.index') }}">Livros</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::routeIs('assuntos.index') ? 'active' : '' }}" aria-current="page"
+                            href="{{ route('assuntos.index') }}">Assuntos</a>
+                    </li>
                 </ul>
             </div>
         </div>

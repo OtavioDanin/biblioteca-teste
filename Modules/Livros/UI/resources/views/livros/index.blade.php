@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Lista de Livrosxxxxx</h1>
+        <h1>Lista de Livros</h1>
         <a href="{{ route('livros.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-circle"></i> Adicionar Livro
         </a>
