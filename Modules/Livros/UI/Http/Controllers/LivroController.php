@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Livros\UI\Http\Controllers;
 
-use Modules\Livros\DTOs\LivroDTO;
 use Modules\Livros\Domain\LivroException;
 use Modules\Assuntos\Domain\AssuntoServiceInterface;
 use Modules\Autores\Domain\AutorServiceInterface;
 use Modules\Livros\Domain\LivroServiceInterface;
-use Illuminate\Http\Request;
+use Modules\Livros\Application\StoreBookRequest;
 use Throwable;
 use Illuminate\Database\QueryException;
 use Modules\Shares\Infrastructure\LoggerFileTrait;
@@ -20,7 +21,6 @@ class LivroController extends Controller
         protected LivroServiceInterface $livroService,
         protected AutorServiceInterface $autorService,
         protected AssuntoServiceInterface $assuntoService,
-        protected LivroDTO $livroDTO,
     ) {}
 
     public function index()
@@ -49,24 +49,11 @@ class LivroController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(StoreBookRequest $storeBookRequest)
     {
         try {
-            $request->validate([
-                'titulo' => 'required|string|max:40',
-                'valor' => 'required|numeric|min:0|regex:/^\d+(\.\d{1,2})?$/',
-                'editora' => 'required|string|max:40',
-                'edicao' => 'required|integer|min:1',
-                'anoPublicacao' => 'required|string|max:4',
-                'autores' => 'nullable|array',
-                'autores.*' => 'exists:autores,cod_au',
-                'assuntos' => 'nullable|array',
-                'assuntos.*' => 'exists:assuntos,cod_as',
-            ]);
-
-            $livroDTO = $this->livroDTO->create($request->all());
-            $this->livroService->save($livroDTO);
-
+            $storeBookRequest->validated();
+            $this->livroService->save($storeBookRequest->all());
             return redirect()->route('livros.index')
                 ->with('success', 'Livro criado com sucesso!');
         } catch (LivroException $livroEx) {
@@ -98,7 +85,7 @@ class LivroController extends Controller
         }
     }
 
-    public function edit(string $id)
+    public function edit(int $id)
     {
         try {
             $livro = $this->livroService->find($id);
@@ -114,22 +101,11 @@ class LivroController extends Controller
         }
     }
 
-    public function update(Request $request, string $id)
+    public function update(StoreBookRequest $storeBookRequest, int $id)
     {
         try {
-            $request->validate([
-                'titulo' => 'required|string|max:40',
-                'valor' => 'required|numeric|min:0|regex:/^\d+(\.\d{1,2})?$/',
-                'editora' => 'required|string|max:40',
-                'edicao' => 'required|integer|min:1',
-                'anoPublicacao' => 'required|string|max:4',
-                'autores' => 'nullable|array',
-                'autores.*' => 'exists:autores,cod_au',
-                'assuntos' => 'nullable|array',
-                'assuntos.*' => 'exists:assuntos,cod_as',
-            ]);
-            $livroDTO = $this->livroDTO->create($request->all());
-            $this->livroService->update($id, $livroDTO);
+            $storeBookRequest->validated();
+            $this->livroService->update($id, $storeBookRequest->all());
             return redirect()->route('livros.index')
                 ->with('success', 'Livro atualizado com sucesso!');
         } catch (LivroException $livroEx) {
@@ -147,7 +123,7 @@ class LivroController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         try {
             $this->livroService->destroy($id);

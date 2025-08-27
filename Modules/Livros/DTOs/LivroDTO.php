@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Modules\Livros\DTOs;
 
-readonly class LivroDTO
+use Spatie\LaravelData\Data;
+
+class LivroDTO extends Data
 {
-    public function create(array $data): array
-    {
-        return [
-            'titulo' => $data['titulo'],
-            'valor' => $data['valor'],
-            'editora' => $data['editora'],
-            'edicao' => $data['edicao'],
-            'ano_publicacao' => $data['anoPublicacao'],
-            'autores' => $data['autores'],
-            'assuntos' => $data['assuntos'],
-        ];
-    }
+    public ?string $titulo;
+    public ?string $valor;
+    public ?string $editora;
+    public ?string $edicao;
+    public ?string $ano_publicacao;
+    public ?array $autores;
+    public ?array $assuntos;
 }

@@ -39,8 +39,8 @@
                     <input type="number" class="form-control" id="edicao" name="edicao" value="{{ old('edicao') }}" required min="1">
                 </div>
                 <div class="mb-3">
-                    <label for="anoPublicacao" class="form-label">Ano de Publicação:</label>
-                    <input type="text" class="form-control" id="anoPublicacao" name="anoPublicacao" value="{{ old('anoPublicacao') }}" required maxlength="4">
+                    <label for="ano_publicacao" class="form-label">Ano de Publicação:</label>
+                    <input type="text" class="form-control" id="ano_publicacao" name="ano_publicacao" value="{{ old('ano_publicacao') }}" required maxlength="4">
                     <small class="form-text text-muted">Ex: 1984</small>
                 </div>
 

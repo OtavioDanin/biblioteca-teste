@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\DB;
 use Modules\Livros\Domain\LivroException;
 use Modules\Livros\Domain\LivroRepositoryInterface;
 use Modules\Livros\Domain\LivroServiceInterface;
+use Modules\Livros\DTOs\LivroDTO;
 
 class LivroService implements LivroServiceInterface
 {
-    public function __construct(protected LivroRepositoryInterface $livroRepository) {}
+    public function __construct(
+        protected LivroRepositoryInterface $livroRepository,
+        protected LivroDTO $livroData,
+    ) {}
 
     public function getAllLivros(): array
     {
@@ -19,11 +23,12 @@ class LivroService implements LivroServiceInterface
         return $allLivros->toArray();
     }
 
-    public function save(array $livroData): void
+    public function save(array $data): void
     {
-        if (empty($livroData)) {
-            throw new LivroException('Não existe livro para ser inserido.', 500);
+        if (empty($data)) {
+            throw new LivroException('Não existe livro para ser inserido.', 400);
         }
+        $livroData = $this->livroData::from($data)->all();
         DB::transaction(function () use ($livroData) {
             $livro =  $this->livroRepository->persist($livroData);
             $livro->autores()->attach($livroData['autores']);
@@ -41,11 +46,12 @@ class LivroService implements LivroServiceInterface
         return $dataArray;
     }
 
-    public function update(int $id, array $livroData): void
+    public function update(int $id, array $data): void
     {
-        if (empty($livroData)) {
-            throw new LivroException('Não há livros para atualizar.', 500);
+        if (empty($data)) {
+            throw new LivroException('Não há livros para atualizar.', 400);
         }
+        $livroData = $this->livroData::from($data)->all();
         DB::transaction(function () use ($id, $livroData) {
             $livro =  $this->livroRepository->update($id, $livroData);
             $livro->autores()->sync($livroData['autores']);
