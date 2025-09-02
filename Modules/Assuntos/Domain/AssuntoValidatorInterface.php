@@ -7,5 +7,4 @@ namespace Modules\Assuntos\Domain;
 interface AssuntoValidatorInterface
 {
     public function validate(object $data): void;
-    public function validateRuleDelete(int $id): void;
 }

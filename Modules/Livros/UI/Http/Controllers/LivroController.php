@@ -11,6 +11,7 @@ use Modules\Livros\Domain\LivroServiceInterface;
 use Modules\Livros\Application\StoreBookRequest;
 use Throwable;
 use Illuminate\Database\QueryException;
+use Modules\Livros\Domain\LivroProcessingServiceInterface;
 use Modules\Shares\Infrastructure\LoggerFileTrait;
 
 class LivroController extends Controller
@@ -19,6 +20,7 @@ class LivroController extends Controller
 
     public function __construct(
         protected LivroServiceInterface $livroService,
+        protected LivroProcessingServiceInterface $livroProcessing,
         protected AutorServiceInterface $autorService,
         protected AssuntoServiceInterface $assuntoService,
     ) {}
@@ -53,7 +55,7 @@ class LivroController extends Controller
     {
         try {
             $storeBookRequest->validated();
-            $this->livroService->save($storeBookRequest->all());
+            $this->livroProcessing->save($storeBookRequest->all());
             return redirect()->route('livros.index')
                 ->with('success', 'Livro criado com sucesso!');
         } catch (LivroException $livroEx) {

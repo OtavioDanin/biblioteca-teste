@@ -23,17 +23,13 @@ class LivroService implements LivroServiceInterface
         return $allLivros->toArray();
     }
 
-    public function save(array $data): void
+    public function save(array $data)
     {
         if (empty($data)) {
             throw new LivroException('Não existe livro para ser inserido.', 400);
         }
         $livroData = $this->livroData::from($data)->all();
-        DB::transaction(function () use ($livroData) {
-            $livro =  $this->livroRepository->persist($livroData);
-            $livro->autores()->attach($livroData['autores']);
-            $livro->assuntos()->attach($livroData['assuntos']);
-        });
+        return $this->livroRepository->persist($livroData);
     }
 
     public function find(int $id): array

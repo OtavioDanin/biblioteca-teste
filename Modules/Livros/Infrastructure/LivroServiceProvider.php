@@ -3,7 +3,9 @@
 namespace Modules\Livros\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Livros\Application\LivroProcessingService;
 use Modules\Livros\Application\LivroService;
+use Modules\Livros\Domain\LivroProcessingServiceInterface;
 use Modules\Livros\Domain\LivroServiceInterface;
 use Modules\Livros\Domain\LivroRepositoryInterface;
 
@@ -23,6 +25,11 @@ class LivroServiceProvider extends ServiceProvider
         $this->app->bind(
             LivroServiceInterface::class,
             LivroService::class
+        );
+        // Registra a implementação da service de orquestração de ações para a interface correspondente
+        $this->app->bind(
+            LivroProcessingServiceInterface::class,
+            LivroProcessingService::class
         );
     }
 

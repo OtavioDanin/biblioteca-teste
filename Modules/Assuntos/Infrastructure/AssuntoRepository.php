@@ -7,9 +7,12 @@ namespace Modules\Assuntos\Infrastructure;
 use App\Models\Assunto;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Assuntos\Domain\AssuntoRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class AssuntoRepository implements AssuntoRepositoryInterface
 {
+    const string TABLE_ASSOCIATIVE = 'livro_assunto';
+
     public function __construct(protected Assunto $assunto) {}
 
     public function getAll(): Collection
@@ -43,4 +46,10 @@ class AssuntoRepository implements AssuntoRepositoryInterface
     {
         return $this->assunto::find($id)->livros()->exists();
     }
+
+    public function persistLivroAssunto(array $data): bool
+    {
+        return DB::table(self::TABLE_ASSOCIATIVE)->insert($data);
+    }
+    
 }

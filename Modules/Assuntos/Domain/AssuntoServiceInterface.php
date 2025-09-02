@@ -9,4 +9,5 @@ interface AssuntoServiceInterface
     public function update(int $id, array $data);
     public function save(array $data);
     public function destroy(int $id);
+    public function saveAssuntoAutor(array $data);
 }

@@ -38,7 +38,7 @@ class AssuntoService implements AssuntoServiceInterface
     public function save(array $data): void
     {
         if (empty($data)) {
-            throw new AssuntoException('Dados de assunto vazio para atualizar.', 400);
+            throw new AssuntoException('Não existe assunto para ser inserido.', 400);
         }
         $this->assuntoRepository->persist($data);
     }
@@ -46,5 +46,13 @@ class AssuntoService implements AssuntoServiceInterface
     public function destroy(int $id): void
     {
         $this->assuntoRepository->delete($id);
+    }
+
+    public function saveAssuntoAutor(array $data): void
+    {
+        $hasPersist = $this->assuntoRepository->persistLivroAssunto($data);
+        if(!$hasPersist) {
+            throw new AssuntoException('Falha ao inserir na tabela livro_assunto');
+        }
     }
 }

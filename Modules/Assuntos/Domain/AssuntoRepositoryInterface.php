@@ -12,4 +12,5 @@ interface AssuntoRepositoryInterface
     public function persist(array $data);
     public function delete(int $id);
     public function isLinkedToBooks(int $id): bool;
+    public function persistLivroAssunto(array $data);
 }

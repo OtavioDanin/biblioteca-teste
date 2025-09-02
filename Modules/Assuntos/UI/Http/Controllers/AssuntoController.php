@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Modules\Assuntos\Domain\AssuntoException;
+use Modules\Assuntos\Domain\AssuntoRulesServiceInterface;
 use Modules\Assuntos\Domain\AssuntoServiceInterface;
 use Modules\Assuntos\Domain\AssuntoValidatorInterface;
 use Modules\Assuntos\DTOs\AssuntoDTO;
@@ -22,6 +23,7 @@ class AssuntoController extends Controller
         protected AssuntoServiceInterface $assuntoService,
         protected AssuntoDTO $dto,
         protected AssuntoValidatorInterface $validator,
+        protected AssuntoRulesServiceInterface $assuntoRulesService,
     ) {}
 
     public function index()
@@ -131,7 +133,7 @@ class AssuntoController extends Controller
     public function destroy(int $id)
     {
         try {
-            $this->validator->validateRuleDelete($id);
+            $this->assuntoRulesService->validateRuleDelete($id);
             $this->assuntoService->destroy($id);
             return redirect()->route('assuntos.index')
                 ->with('success', 'Assunto excluído com sucesso!');
